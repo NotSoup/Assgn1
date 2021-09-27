@@ -42,12 +42,19 @@ def main():
                                                                                         random_state=1, 
                                                                                         X=df2_x, y=df2_y, cv=5)
 
-    plt.plot(np.linspace(0.1, 1, 10), valid_scores1[:, 0])
-    plt.plot(np.linspace(0.1, 1, 10), valid_scores2[:, 0])
-    plt.title("KNN Learning Curve (Digits Hyperparameters)")
-    plt.xlabel("Training Set Size [Percentage]")
-    plt.ylabel("Test Set Score")
-    plt.legend(["Digits", "LoL"])
+    plt.plot(np.linspace(0.1, 1, 10), np.mean(valid_scores1, axis=1), 'b')
+    plt.fill_between(np.linspace(0.1, 1, 10), np.mean(valid_scores1, axis=1) - np.std(np.mean(valid_scores1, axis=1)),
+                         np.mean(valid_scores1, axis=1) + np.std(np.mean(valid_scores1, axis=1)), alpha=0.1,
+                         color="b")
+    plt.plot(np.linspace(0.1, 1, 10), np.mean(valid_scores2, axis=1), 'r')
+    plt.fill_between(np.linspace(0.1, 1, 10), np.mean(valid_scores2, axis=1) - np.std(np.mean(valid_scores2, axis=1)),
+                         np.mean(valid_scores2, axis=1) + np.std(np.mean(valid_scores2, axis=1)), alpha=0.1,
+                         color="r")
+    plt.grid(linestyle='--')
+    plt.title("KNN Learning Curve - Validation Scores (Digits Hyperparameters)")
+    plt.xlabel("Training Examples [Percentage of Dataset]")
+    plt.ylabel("Classification Score")
+    plt.legend(["Digits-dataset", "LoL-dataset"])
     plt.savefig("KNN-1.png")
 
     train_sizes, train_scores1, valid_scores1 = learning_curve(KNeighborsClassifier(n_neighbors=2, 
@@ -62,12 +69,19 @@ def main():
                                                                                         X=df2_x, y=df2_y, cv=5)
 
     plt.clf()
-    plt.plot(np.linspace(0.1, 1, 10), valid_scores1[:, 0])
-    plt.plot(np.linspace(0.1, 1, 10), valid_scores2[:, 0])
-    plt.title("KNN Learning Curve (LoL Hyperparameters)")
-    plt.xlabel("Training Set Size [Percentage]")
-    plt.ylabel("Test Set Score")
-    plt.legend(["Digits", "LoL"])
+    plt.plot(np.linspace(0.1, 1, 10), np.mean(valid_scores1, axis=1), 'b')
+    plt.fill_between(np.linspace(0.1, 1, 10), np.mean(valid_scores1, axis=1) - np.std(np.mean(valid_scores1, axis=1)),
+                         np.mean(valid_scores1, axis=1) + np.std(np.mean(valid_scores1, axis=1)), alpha=0.1,
+                         color="b")
+    plt.plot(np.linspace(0.1, 1, 10), np.mean(valid_scores2, axis=1), 'r')
+    plt.fill_between(np.linspace(0.1, 1, 10), np.mean(valid_scores2, axis=1) - np.std(np.mean(valid_scores2, axis=1)),
+                         np.mean(valid_scores2, axis=1) + np.std(np.mean(valid_scores2, axis=1)), alpha=0.1,
+                         color="r")
+    plt.grid(linestyle='--')
+    plt.title("KNN Learning Curve - Validation Scores (LoL Hyperparameters)")
+    plt.xlabel("Training Examples [Percentage of Dataset]")
+    plt.ylabel("Classification Score")
+    plt.legend(["Digits-dataset", "LoL-dataset"])
     plt.savefig("KNN-2.png")
 
 if __name__ == "__main__":

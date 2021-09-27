@@ -36,43 +36,57 @@ def main():
                                                                                         degree=3),
                                                                                         train_sizes=np.linspace(0.1, 1, 10),
                                                                                         random_state=1, 
-                                                                                        X=df1_x, y=df1_y, cv=5)
+                                                                                        X=df1_x, y=df1_y, cv=2)
     train_sizes, train_scores, valid_scores2 = learning_curve(svm.SVC(random_state=1, 
                                                                                         gamma=0.001, 
                                                                                         degree=3),
                                                                                         train_sizes=np.linspace(0.1, 1, 10),
                                                                                         random_state=1, 
-                                                                                        X=df2_x, y=df2_y, cv=5)
+                                                                                        X=df2_x, y=df2_y, cv=2)
 
-    plt.plot(np.linspace(0.1, 1, 10), valid_scores1[:, 0])
-    plt.plot(np.linspace(0.1, 1, 10), valid_scores2[:, 0])
-    plt.title("SVC Learning Curve (Digits Hyperparameters)")
-    plt.xlabel("Training Set Size [Percentage]")
-    plt.ylabel("Test Set Score")
-    plt.legend(["Digits", "LoL"])
-    plt.savefig("SVC-1.png")
+    plt.plot(np.linspace(0.1, 1, 10), np.mean(valid_scores1, axis=1), 'b')
+    plt.fill_between(np.linspace(0.1, 1, 10), np.mean(valid_scores1, axis=1) - np.std(np.mean(valid_scores1, axis=1)),
+                         np.mean(valid_scores1, axis=1) + np.std(np.mean(valid_scores1, axis=1)), alpha=0.1,
+                         color="b")
+    plt.plot(np.linspace(0.1, 1, 10), np.mean(valid_scores2, axis=1), 'r')
+    plt.fill_between(np.linspace(0.1, 1, 10), np.mean(valid_scores2, axis=1) - np.std(np.mean(valid_scores2, axis=1)),
+                         np.mean(valid_scores2, axis=1) + np.std(np.mean(valid_scores2, axis=1)), alpha=0.1,
+                         color="r")
+    plt.grid(linestyle='--')
+    plt.title("SVM Learning Curve - Validation Scores (Digits Hyperparameters)")
+    plt.xlabel("Training Examples [Percentage of Dataset]")
+    plt.ylabel("Classification Score")
+    plt.legend(["Digits-dataset", "LoL-dataset"])
+    plt.savefig("SVM-1.png")
 
     train_sizes, train_scores, valid_scores1 = learning_curve(svm.SVC(random_state=1, 
                                                                                         gamma=0.0001, 
                                                                                         degree=3),
                                                                                         train_sizes=np.linspace(0.1, 1, 10),
                                                                                         random_state=1, 
-                                                                                        X=df1_x, y=df1_y, cv=5)
+                                                                                        X=df1_x, y=df1_y, cv=2)
     train_sizes, train_scores, valid_scores2 = learning_curve(svm.SVC(random_state=1, 
                                                                                         gamma=0.0001, 
                                                                                         degree=3),
                                                                                         train_sizes=np.linspace(0.1, 1, 10),
                                                                                         random_state=1, 
-                                                                                        X=df2_x, y=df2_y, cv=5)
+                                                                                        X=df2_x, y=df2_y, cv=2)
 
     plt.clf()
-    plt.plot(np.linspace(0.1, 1, 10), valid_scores1[:, 0])
-    plt.plot(np.linspace(0.1, 1, 10), valid_scores2[:, 0])
-    plt.title("SVC Learning Curve (LoL Hyperparameters)")
-    plt.xlabel("Training Set Size [Percentage]")
-    plt.ylabel("Test Set Score")
-    plt.legend(["Digits", "LoL"])
-    plt.savefig("SVC-2.png")
+    plt.plot(np.linspace(0.1, 1, 10), np.mean(valid_scores1, axis=1), 'b')
+    plt.fill_between(np.linspace(0.1, 1, 10), np.mean(valid_scores1, axis=1) - np.std(np.mean(valid_scores1, axis=1)),
+                         np.mean(valid_scores1, axis=1) + np.std(np.mean(valid_scores1, axis=1)), alpha=0.1,
+                         color="b")
+    plt.plot(np.linspace(0.1, 1, 10), np.mean(valid_scores2, axis=1), 'r')
+    plt.fill_between(np.linspace(0.1, 1, 10), np.mean(valid_scores2, axis=1) - np.std(np.mean(valid_scores2, axis=1)),
+                         np.mean(valid_scores2, axis=1) + np.std(np.mean(valid_scores2, axis=1)), alpha=0.1,
+                         color="r")
+    plt.grid(linestyle='--')
+    plt.title("SVM Learning Curve - Validation Scores (LoL Hyperparameters)")
+    plt.xlabel("Training Examples [Percentage of Dataset]")
+    plt.ylabel("Classification Score")
+    plt.legend(["Digits-dataset", "LoL-dataset"])
+    plt.savefig("SVM-2.png")
 
 if __name__ == "__main__":
     main()
