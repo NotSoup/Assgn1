@@ -19,7 +19,7 @@ def main():
     df2_y = df2["blue_win"]
 
     parameters = {'solver':('lbfgs', 'sgd', 'adam'), 'alpha':[0.0001, 0.001, 0.01]}
-    nn = MLPClassifier(random_state=1, max_iter=300)
+    nn = MLPClassifier(random_state=1, max_iter=500)
 
     clf1 = GridSearchCV(nn, parameters)
     clf1 = clf1.fit(df1_x, df1_y)
@@ -30,6 +30,7 @@ def main():
     clf2 = clf2.fit(df2_x, df2_y)
     print("LoL Best Params nn:")
     print(clf2.best_params_)
+    print(clf2.best_score_)
 
     train_sizes, train_scores, valid_scores1 = learning_curve(MLPClassifier(random_state=1, 
                                                                                         solver="lbfgs",
@@ -92,10 +93,47 @@ def main():
     plt.legend(["Digits-dataset", "LoL-dataset"])
     plt.savefig("NN-2.png")
 
-    # import os
-    # duration = 1  # seconds
-    # freq = 440  # Hz
-    # os.system('play -nq -t alsa synth {} sine {}'.format(duration, freq))
+    # train_sizes, train_scores, valid_scores1 = learning_curve(MLPClassifier(random_state=1, 
+    #                                                                                     solver="lbfgs",
+    #                                                                                     alpha=0.0001,
+    #                                                                                     activation='identity'),
+    #                                                                                     train_sizes=np.linspace(0.1, 1, 10),
+    #                                                                                     random_state=1, 
+    #                                                                                     X=df2_x, y=df2_y, cv=2)
+    # train_sizes, train_scores, valid_scores2 = learning_curve(MLPClassifier(random_state=1, 
+    #                                                                                     solver="lbfgs",
+    #                                                                                     alpha=0.0001,
+    #                                                                                     activation='logistic'),
+    #                                                                                     train_sizes=np.linspace(0.1, 1, 10),
+    #                                                                                     random_state=1, 
+    #                                                                                     X=df2_x, y=df2_y, cv=2)
+    # train_sizes, train_scores, valid_scores3 = learning_curve(MLPClassifier(random_state=1, 
+    #                                                                                     solver="lbfgs",
+    #                                                                                     alpha=0.0001,
+    #                                                                                     activation='tanh'),
+    #                                                                                     train_sizes=np.linspace(0.1, 1, 10),
+    #                                                                                     random_state=1, 
+    #                                                                                     X=df2_x, y=df2_y, cv=2)
+    # train_sizes, train_scores, valid_scores4 = learning_curve(MLPClassifier(random_state=1, 
+    #                                                                                     solver="lbfgs",
+    #                                                                                     alpha=0.0001,
+    #                                                                                     activation='relu'),
+    #                                                                                     train_sizes=np.linspace(0.1, 1, 10),
+    #                                                                                     random_state=1, 
+    #                                                                                     X=df2_x, y=df2_y, cv=2)
+                                                                                                                                                                                                                                                          
+
+    # plt.plot(np.linspace(0.1, 1, 10), valid_scores1[:, 0], 'b')
+    # plt.plot(np.linspace(0.1, 1, 10), valid_scores2[:, 0], 'r')
+    # plt.plot(np.linspace(0.1, 1, 10), valid_scores3[:, 0], 'g')
+    # plt.plot(np.linspace(0.1, 1, 10), valid_scores4[:, 0], 'm')
+
+    # plt.grid(linestyle='--')
+    # plt.title("Digits-Dataset Learning Curve - Validation Scores (Activation Functions)")
+    # plt.xlabel("Training Examples [Percentage of Dataset]")
+    # plt.ylabel("Classification Score")
+    # plt.legend(["identity", "logistic", "tanh", "relu"])
+    # plt.savefig("NN-3.png")
 
 
 if __name__ == "__main__":

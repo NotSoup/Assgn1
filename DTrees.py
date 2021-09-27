@@ -18,7 +18,7 @@ def main():
     df2_x = df2.drop(columns=["blue_win"])
     df2_y = df2["blue_win"]
 
-    parameters = {'max_depth':[1, 5, 10]}
+    parameters = {'criterion':('gini', 'entropy'), 'min_samples_split':[2, 3, 4], 'min_samples_leaf': [1, 2, 3]}
     dt = tree.DecisionTreeClassifier(random_state=1)
 
     clf1 = GridSearchCV(dt, parameters)
@@ -31,66 +31,66 @@ def main():
     print("LoL Best Params dt:")
     print(clf2.best_params_)
 
-    # train_sizes1, train_scores, valid_scores1 = learning_curve(tree.DecisionTreeClassifier(random_state=1, 
-    #                                                                                     criterion="entropy", 
-    #                                                                                     min_samples_split=2,
-    #                                                                                     min_samples_leaf=1),
-    #                                                                                     train_sizes=np.linspace(0.1, 1, 10),
-    #                                                                                     random_state=1, 
-    #                                                                                     X=df1_x, y=df1_y, cv=5)
-    # train_sizes2, train_scores, valid_scores2 = learning_curve(tree.DecisionTreeClassifier(random_state=1, 
-    #                                                                                     criterion="entropy", 
-    #                                                                                     min_samples_split=2,
-    #                                                                                     min_samples_leaf=3),
-    #                                                                                     train_sizes=np.linspace(0.1, 1, 10),
-    #                                                                                     random_state=1, 
-    #                                                                                     X=df2_x, y=df2_y, cv=5)
+    train_sizes1, train_scores, valid_scores1 = learning_curve(tree.DecisionTreeClassifier(random_state=1, 
+                                                                                        criterion="entropy", 
+                                                                                        min_samples_split=2,
+                                                                                        min_samples_leaf=1),
+                                                                                        train_sizes=np.linspace(0.1, 1, 10),
+                                                                                        random_state=1, 
+                                                                                        X=df1_x, y=df1_y, cv=5)
+    train_sizes2, train_scores, valid_scores2 = learning_curve(tree.DecisionTreeClassifier(random_state=1, 
+                                                                                        criterion="entropy", 
+                                                                                        min_samples_split=2,
+                                                                                        min_samples_leaf=3),
+                                                                                        train_sizes=np.linspace(0.1, 1, 10),
+                                                                                        random_state=1, 
+                                                                                        X=df2_x, y=df2_y, cv=5)
 
-    # plt.plot(np.linspace(0.1, 1, 10), np.mean(valid_scores1, axis=1), 'b')
-    # plt.fill_between(np.linspace(0.1, 1, 10), np.mean(valid_scores1, axis=1) - np.std(np.mean(valid_scores1, axis=1)),
-    #                      np.mean(valid_scores1, axis=1) + np.std(np.mean(valid_scores1, axis=1)), alpha=0.1,
-    #                      color="b")
-    # plt.plot(np.linspace(0.1, 1, 10), np.mean(valid_scores2, axis=1), 'r')
-    # plt.fill_between(np.linspace(0.1, 1, 10), np.mean(valid_scores2, axis=1) - np.std(np.mean(valid_scores2, axis=1)),
-    #                      np.mean(valid_scores2, axis=1) + np.std(np.mean(valid_scores2, axis=1)), alpha=0.1,
-    #                      color="r")
-    # plt.grid(linestyle='--')
-    # plt.title("Decision-Tree Learning Curve - Validation Scores (Digits Hyperparameters)")
-    # plt.xlabel("Training Examples [Percentage of Dataset]")
-    # plt.ylabel("Classification Score")
-    # plt.legend(["Digits-dataset", "LoL-dataset"])
-    # plt.savefig("DT-1.png")
+    plt.plot(np.linspace(0.1, 1, 10), np.mean(valid_scores1, axis=1), 'b')
+    plt.fill_between(np.linspace(0.1, 1, 10), np.mean(valid_scores1, axis=1) - np.std(np.mean(valid_scores1, axis=1)),
+                         np.mean(valid_scores1, axis=1) + np.std(np.mean(valid_scores1, axis=1)), alpha=0.1,
+                         color="b")
+    plt.plot(np.linspace(0.1, 1, 10), np.mean(valid_scores2, axis=1), 'r')
+    plt.fill_between(np.linspace(0.1, 1, 10), np.mean(valid_scores2, axis=1) - np.std(np.mean(valid_scores2, axis=1)),
+                         np.mean(valid_scores2, axis=1) + np.std(np.mean(valid_scores2, axis=1)), alpha=0.1,
+                         color="r")
+    plt.grid(linestyle='--')
+    plt.title("Decision-Tree Learning Curve - Validation Scores (Digits Hyperparameters)")
+    plt.xlabel("Training Examples [Percentage of Dataset]")
+    plt.ylabel("Classification Score")
+    plt.legend(["Digits-dataset", "LoL-dataset"])
+    plt.savefig("DT-1.png")
 
-    # train_sizes, train_scores, valid_scores3 = learning_curve(tree.DecisionTreeClassifier(random_state=1, 
-    #                                                                                     criterion="entropy", 
-    #                                                                                     min_samples_split=2,
-    #                                                                                     min_samples_leaf=3),
-    #                                                                                     train_sizes=np.linspace(0.1, 1, 10),
-    #                                                                                     random_state=1, 
-    #                                                                                     X=df1_x, y=df1_y, cv=5)
-    # train_sizes, train_scores, valid_scores4 = learning_curve(tree.DecisionTreeClassifier(random_state=1, 
-    #                                                                                     criterion="entropy", 
-    #                                                                                     min_samples_split=2,
-    #                                                                                     min_samples_leaf=3),
-    #                                                                                     train_sizes=np.linspace(0.1, 1, 10),
-    #                                                                                     random_state=1, 
-    #                                                                                     X=df2_x, y=df2_y, cv=5)
+    train_sizes, train_scores, valid_scores1 = learning_curve(tree.DecisionTreeClassifier(random_state=1, 
+                                                                                        criterion="entropy", 
+                                                                                        min_samples_split=2,
+                                                                                        min_samples_leaf=3),
+                                                                                        train_sizes=np.linspace(0.1, 1, 10),
+                                                                                        random_state=1, 
+                                                                                        X=df1_x, y=df1_y, cv=5)
+    train_sizes, train_scores, valid_scores2 = learning_curve(tree.DecisionTreeClassifier(random_state=1, 
+                                                                                        criterion="entropy", 
+                                                                                        min_samples_split=2,
+                                                                                        min_samples_leaf=3),
+                                                                                        train_sizes=np.linspace(0.1, 1, 10),
+                                                                                        random_state=1, 
+                                                                                        X=df2_x, y=df2_y, cv=5)
 
-    # plt.clf()
-    # plt.plot(np.linspace(0.1, 1, 10), np.mean(valid_scores3, axis=1), 'b')
-    # plt.fill_between(np.linspace(0.1, 1, 10), np.mean(valid_scores3, axis=1) - np.std(np.mean(valid_scores3, axis=1)),
-    #                      np.mean(valid_scores3, axis=1) + np.std(np.mean(valid_scores3, axis=1)), alpha=0.1,
-    #                      color="b")
-    # plt.plot(np.linspace(0.1, 1, 10), np.mean(valid_scores4, axis=1), 'r')
-    # plt.fill_between(np.linspace(0.1, 1, 10), np.mean(valid_scores4, axis=1) - np.std(np.mean(valid_scores4, axis=1)),
-    #                      np.mean(valid_scores4, axis=1) + np.std(np.mean(valid_scores4, axis=1)), alpha=0.1,
-    #                      color="r")
-    # plt.grid(linestyle='--')
-    # plt.title("Decision-Tree Learning Curve - Validation Scores (LoL Hyperparameters)")
-    # plt.xlabel("Training Examples [Percentage of Dataset]")
-    # plt.ylabel("Classification Score")
-    # plt.legend(["Digits-dataset", "LoL-dataset"])
-    # plt.savefig("DT-2.png")
+    plt.clf()
+    plt.plot(np.linspace(0.1, 1, 10), np.mean(valid_scores1, axis=1), 'b')
+    plt.fill_between(np.linspace(0.1, 1, 10), np.mean(valid_scores1, axis=1) - np.std(np.mean(valid_scores1, axis=1)),
+                         np.mean(valid_scores1, axis=1) + np.std(np.mean(valid_scores1, axis=1)), alpha=0.1,
+                         color="b")
+    plt.plot(np.linspace(0.1, 1, 10), np.mean(valid_scores1, axis=1), 'r')
+    plt.fill_between(np.linspace(0.1, 1, 10), np.mean(valid_scores2, axis=1) - np.std(np.mean(valid_scores2, axis=1)),
+                         np.mean(valid_scores2, axis=1) + np.std(np.mean(valid_scores2, axis=1)), alpha=0.1,
+                         color="r")
+    plt.grid(linestyle='--')
+    plt.title("Decision-Tree Learning Curve - Validation Scores (LoL Hyperparameters)")
+    plt.xlabel("Training Examples [Percentage of Dataset]")
+    plt.ylabel("Classification Score")
+    plt.legend(["Digits-dataset", "LoL-dataset"])
+    plt.savefig("DT-2.png")
 
 
 if __name__ == "__main__":
